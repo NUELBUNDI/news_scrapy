@@ -1,25 +1,41 @@
-# Scrapy settings for kra_notices project
-#
-# For simplicity, this file contains only settings considered important or
-# commonly used. You can find more settings consulting the documentation:
-#
-#     https://docs.scrapy.org/en/latest/topics/settings.html
-#     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+BOT_NAME               = "zimra_notices"
 
-BOT_NAME = "kra_notices"
+SPIDER_MODULES         = ["zimra_notices.spiders"]
+NEWSPIDER_MODULE       = "zimra_notices.spiders"
 
-SPIDER_MODULES = ["kra_notices.spiders"]
-NEWSPIDER_MODULE = "kra_notices.spiders"
+# ITEM_PIPELINES   = {"scrapy.pipelines.files.FilesPipeline": 1}
+ITEM_PIPELINES         = {"zimra_notices.pipelines.CustomFilePipelines": 1}
+# CustomFilePipelines
+FILES_STORE            = "downloaded_files"
 
-USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/W.X.Y.Z Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
 
+## settings.py
+
+DOWNLOADER_MIDDLEWARES  = {
+                            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware' : None,
+                            'scrapy.downloadermiddlewares.retry.RetryMiddleware'         : None,
+                            'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware' : 400,
+                            'scrapy_fake_useragent.middleware.RetryUserAgentMiddleware'  : 401  
+                         }
+
+## settings.py
+
+FAKEUSERAGENT_PROVIDERS = [
+                            'scrapy_fake_useragent.providers.FakeUserAgentProvider',  # This is the first provider we'll try
+                            'scrapy_fake_useragent.providers.FakerProvider',  # If FakeUserAgentProvider fails, we'll use faker to generate a user-agent string for us
+                            'scrapy_fake_useragent.providers.FixedUserAgentProvider',  # Fall back to USER_AGENT value
+                          ]
+
+## Set Fallback User-Agent
+USER_AGENT             =   "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/W.X.Y.Z Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "kra_notices (+http://www.yourdomain.com)"
+#USER_AGENT = "zimra_notices (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+DOWNLOAD_DELAY = 2
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -47,13 +63,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    "kra_notices.middlewares.KraNoticesSpiderMiddleware": 543,
+#    "zimra_notices.middlewares.ZimraNoticesSpiderMiddleware": 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    "kra_notices.middlewares.KraNoticesDownloaderMiddleware": 543,
+#    "zimra_notices.middlewares.ZimraNoticesDownloaderMiddleware": 543,
 #}
 
 # Enable or disable extensions
@@ -64,14 +80,13 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   "kra_notices.pipelines.KranewsPipeline"  :  100,
-   "kra_notices.pipelines.SavingToMysqlPipeline": 300, 
-}
+#ITEM_PIPELINES = {
+#    "zimra_notices.pipelines.ZimraNoticesPipeline": 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-#AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 #AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
@@ -91,6 +106,6 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = "scrapy.extensions.httpcache.FilesystemCacheStorage"
 
 # Set settings whose default value is deprecated to a future-proof value
-REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
-TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
-FEED_EXPORT_ENCODING = "utf-8"
+REQUEST_FINGERPRINTER_IMPLEMENTATION     = "2.7"
+TWISTED_REACTOR                          = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+FEED_EXPORT_ENCODING                     = "utf-8"

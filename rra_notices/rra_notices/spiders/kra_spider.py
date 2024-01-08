@@ -1,5 +1,5 @@
 import scrapy
-from kra_notices.items import NewsItems
+from rra_notices.items import NoticesItem
 
 
 class KraSpiderSpider(scrapy.Spider):
@@ -18,12 +18,14 @@ class KraSpiderSpider(scrapy.Spider):
             
     def news_parse(self, response):
         
-        news_items = NewsItems()
-        news_items['title']    = response.xpath("//h2[@class='blog-title']/text()").get() or response.xpath("//h2/text()").get()
-        news_items['date']     = response.xpath("//div[@class ='col-wrap leftcont']/p/text()").get()
-        news_items['article']  = response.xpath("//div[@class='blog-content']").get()
-        news_items['url']      = response.url
+        notice = NoticesItem()
+        
+        notice['notice_title']    =  response.xpath("//h2[@class='blog-title']/text()").get() or response.xpath("//h2/text()").get()
+        notice['notice_date']     =  response.xpath("//div[@class ='col-wrap leftcont']/p/text()").get()
+        notice['notice_text']     =  response.xpath("//div[@class='blog-content']").get()
+        notice['notice_url']      =  response.url
+        notice['notice_pdf']      =  None
+        notice['notice_country']  = 'Kenya'
 
               
-        yield news_items
-        
+        yield notice

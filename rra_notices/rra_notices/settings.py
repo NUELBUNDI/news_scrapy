@@ -1,4 +1,4 @@
-# Scrapy settings for kra_notices project
+# Scrapy settings for rra_notices project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,16 +7,17 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "kra_notices"
+BOT_NAME = "rra_notices"
 
-SPIDER_MODULES = ["kra_notices.spiders"]
-NEWSPIDER_MODULE = "kra_notices.spiders"
+SPIDER_MODULES   = ["rra_notices.spiders"]
+NEWSPIDER_MODULE  = "rra_notices.spiders"
 
-USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/W.X.Y.Z Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+USER_AGENT        = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "kra_notices (+http://www.yourdomain.com)"
+#USER_AGENT = "rra_notices (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +48,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    "kra_notices.middlewares.KraNoticesSpiderMiddleware": 543,
+#    "rra_notices.middlewares.RraNoticesSpiderMiddleware": 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    "kra_notices.middlewares.KraNoticesDownloaderMiddleware": 543,
+#    "rra_notices.middlewares.RraNoticesDownloaderMiddleware": 543,
 #}
 
 # Enable or disable extensions
@@ -65,8 +66,9 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "kra_notices.pipelines.KranewsPipeline"  :  100,
-   "kra_notices.pipelines.SavingToMysqlPipeline": 300, 
+#    "rra_notices.pipelines.RraNoticesPipeline": 100,
+  'rra_notices.pipelines.CleanPipeLineRRA': 200,
+
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
