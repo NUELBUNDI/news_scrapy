@@ -12,7 +12,7 @@ Prerequisites
 #### Installation
 Clone the NewsScrapy repository:
 ```
-git clone https://github.com/your-username/news-scrapy.git
+https://github.com/NUELBUNDI/news_scrapy.git
 ```
 Install the required dependencies:
 ```
